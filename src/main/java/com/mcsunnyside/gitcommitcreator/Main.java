@@ -19,6 +19,8 @@ public class Main {
         String gitBranch = args[3];
         StringBuilder gitCommit = new StringBuilder();
         String jobUrl = args[4];
+        String description = args[5];
+        String footer = args[6];
 
         InputStream stream;
         try {
@@ -48,13 +50,13 @@ public class Main {
         client.send(new WebhookEmbedBuilder()
                 .setAuthor(new WebhookEmbed.EmbedAuthor("CodeMC.io", "https://docs.codemc.io/assets/img/CodeMCLogoV2.png", "https://ci.codemc.io"))
                 .setColor(15258703)
-                .setDescription("New build now available!")
+                .setDescription(description)
                 .setTitle(new WebhookEmbed.EmbedTitle("CodeMC.io CI Build Successfully!", jobUrl))
                 .addField(new WebhookEmbed.EmbedField(true, "Branch", gitBranch))
                 .addField(new WebhookEmbed.EmbedField(true, "BuildID", "#" + buildId))
                 .addField(new WebhookEmbed.EmbedField(false, "Commit Message", gitCommit.toString().trim()))
                 .addField(new WebhookEmbed.EmbedField(false, "Download", buildUrl))
-                .setFooter(new WebhookEmbed.EmbedFooter("QuickShop provided as-is - we are not responsible for data loss or corruption. You are encouraged to back up your server before any updates!", null))
+                .setFooter(new WebhookEmbed.EmbedFooter(footer, null))
                 .build()
         ).whenComplete((k, v) -> {
             System.out.println("Done");
